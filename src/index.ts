@@ -24,11 +24,11 @@ const gridContent = [
     new Wall()
   ],
   [new Wall(), new Floor(), new Wall(), new Wall(), new Wall(), new Wall()],
-  [new Wall(), new Door(), new Wall()],
+  [new Wall(), new Door(false), new Wall()],
   [new Wall(), new Floor(), new Wall()],
   [new Wall(), new Floor(), new Wall()],
   [new Wall(), new Wall(), new Wall()]
 ];
 const myMap = new MapGrid(gridContent);
 myMap.draw();
-myMap.drawValidRoutes(1, 1);
+myMap.drawValidRoutes(1, 2);

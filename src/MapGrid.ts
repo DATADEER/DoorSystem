@@ -118,27 +118,21 @@ export class MapGrid {
       if (newStart === undefined) {
         throw new Error("newStart is undefined");
       }
-      /*
+
       return this.findSurroundingWalkables(
         newStart.x,
         newStart.y,
         potentialStartpoints,
         walkables
       );
-      */
     }
 
-    return walkablePlaceables;
+    return walkables;
   }
 
   public drawValidRoutes(startX: number, startY: number): void {
     //TODO: check if start point is walkable element
-    const walkables = this.findSurroundingWalkables(
-      startX,
-      startY,
-      [],
-      [{ element: new Floor(), x: 1, y: 2 }]
-    );
+    const walkables = this.findSurroundingWalkables(startX, startY);
 
     walkables.forEach((walkable) => {
       this.canvas
