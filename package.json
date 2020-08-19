@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "@svgdotjs/svg.js": "3.0.16",
-    "eslint": "7.7.0"
+    "@types/lodash.find": "4.6.6",
+    "eslint": "7.7.0",
+    "lodash.find": "4.6.0"
   },
   "devDependencies": {
     "parcel-bundler": "^1.6.1"

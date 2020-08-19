@@ -1,4 +1,6 @@
 import { SVG, Svg } from "@svgdotjs/svg.js";
+import { Floor } from "./Floor";
+import find from "lodash.find";
 
 export interface Placeable {
   isWalkable: boolean;
@@ -31,7 +33,6 @@ export class MapGrid {
   }
 
   get width(): number {
-    console.log(this.gridContent);
     const gridLengths = this.gridContent.map((horizontal) => horizontal.length);
     return Math.max(...gridLengths);
   }
@@ -41,8 +42,6 @@ export class MapGrid {
   }
 
   public draw(): void {
-    console.log("get width of ", this.gridContent);
-
     this.canvas.rect(this.realWidth, this.realHeight).fill("#f06");
     this.gridContent.forEach((horizontal: Placeable[], i: number) => {
       horizontal.forEach((element: Placeable, j: number) => {
@@ -103,21 +102,30 @@ export class MapGrid {
     const walkablePlaceables: PositionedPlaceable[] = surrounding.filter(
       (positionedPlaceable: PositionedPlaceable) => {
         return (
-          positionedPlaceable.element && positionedPlaceable.element.isWalkable
+          positionedPlaceable.element &&
+          positionedPlaceable.element.isWalkable &&
+          find(walkables, positionedPlaceable) === undefined
         );
       }
     );
     potentialStartpoints = potentialStartpoints.concat(walkablePlaceables);
-    console.log("startpoints", potentialStartpoints);
     walkables.push(start);
+    console.log("walkables", walkables);
     if (potentialStartpoints.length !== 0) {
+      console.log("startpoints", potentialStartpoints);
       const newStart = potentialStartpoints.pop();
-      /*this.findSurroundingWalkables(
+      console.log("newstart", newStart, potentialStartpoints);
+      if (newStart === undefined) {
+        throw new Error("newStart is undefined");
+      }
+      /*
+      return this.findSurroundingWalkables(
         newStart.x,
         newStart.y,
         potentialStartpoints,
         walkables
-      );*/
+      );
+      */
     }
 
     return walkablePlaceables;
@@ -125,7 +133,12 @@ export class MapGrid {
 
   public drawValidRoutes(startX: number, startY: number): void {
     //TODO: check if start point is walkable element
-    const walkables = this.findSurroundingWalkables(startX, startY);
+    const walkables = this.findSurroundingWalkables(
+      startX,
+      startY,
+      [],
+      [{ element: new Floor(), x: 1, y: 2 }]
+    );
 
     walkables.forEach((walkable) => {
       this.canvas

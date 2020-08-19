@@ -31,4 +31,4 @@ const gridContent = [
 ];
 const myMap = new MapGrid(gridContent);
 myMap.draw();
-myMap.drawValidRoutes(1, 2);
+myMap.drawValidRoutes(1, 1);
